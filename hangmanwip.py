@@ -1,17 +1,17 @@
 import random
 import sys
+import hangman_words
+import hangman_art
 
+print(hangman_art.logo)
 life_count = 6
 display = []
-word_list = ["aardvark", "baboon", "camel"]
-
-chosen_word = random.choice(word_list)
-print(chosen_word)
+chosen_word = random.choice(hangman_words.word_list)
 
 for _ in chosen_word:
     display += "_"
 word_list = list(str(chosen_word))
-
+print(display)
 # * V3 of While function, added game win and lose condition
 while life_count != 0:
     if "_" not in display:
@@ -21,7 +21,8 @@ while life_count != 0:
         guess = str.lower(input("Guess a letter\n"))
         if guess not in chosen_word:
             life_count -= 1
-            print("Wrong")
+            print(f"{guess} is not in the word.")
+            print(hangman_art.stages[life_count])
             if life_count > 1:
                 print(f"You have {life_count} guesses left.")
             elif life_count == 0:
@@ -29,11 +30,15 @@ while life_count != 0:
                 sys.exit()
             else:
                 print(f"You have {life_count} guess left.")
+        # Tells the player they've already guessed the letter
         else:
-            for position in range(len(chosen_word)):
-                letter = chosen_word[position]
-                if guess == letter:
-                    display[position] = guess
+            if guess in display:
+                print("You've already guessed that letter")
+            else:
+                for position in range(len(chosen_word)):
+                    letter = chosen_word[position]
+                    if guess == letter:
+                        display[position] = guess
 
     print(display)
 
