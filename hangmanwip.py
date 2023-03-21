@@ -26,6 +26,7 @@ while life_count != 0:
             if life_count > 1:
                 print(f"You have {life_count} guesses left.")
             elif life_count == 0:
+                print(f"The word was {chosen_word} ")
                 print("You've ran out of guesses, you lose.")
                 sys.exit()
             else:
