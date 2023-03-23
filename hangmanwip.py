@@ -6,7 +6,6 @@ import hangman_art
 print(hangman_art.logo)
 life_count = 6
 display = []
-guessed_letters = []
 chosen_word = random.choice(hangman_words.word_list)
 
 for _ in chosen_word:
@@ -20,18 +19,10 @@ while life_count != 0:
         sys.exit()
     elif "_" in display:
         guess = str.lower(input("Guess a letter\n"))
-        # Adds guess to a list of already guessed letters
-        if guess not in guessed_letters:
-            guessed_letters.append(guess)
-        elif guess in guessed_letters:
-            print("You already guessed that letter.")
-        print(guessed_letters)
         if guess not in chosen_word:
             life_count -= 1
             print(f"{guess} is not in the word.")
             print(hangman_art.stages[life_count])
-            guessed_letters.append(guess)
-            print(guessed_letters)
             if life_count > 1:
                 print(f"You have {life_count} guesses left.")
             elif life_count == 0:
@@ -42,7 +33,7 @@ while life_count != 0:
                 print(f"You have {life_count} guess left.")
         # Tells the player they've already guessed the letter
         else:
-            if guess in display or guessed_letters:
+            if guess in display:
                 print("You've already guessed that letter")
             else:
                 for position in range(len(chosen_word)):
