@@ -12,8 +12,9 @@ def encrypt(plain_text, shift_amount):
         position = alphabet.index(letter)
         new_position = position + shift_amount
         if new_position > 25:
+            # This code prevents the glitching of if the input extends beyond the original alphabet list, if it does, it creates a new list that doubles the original one,
+            # essentially making it repeat, if it doesn't go over however, it continues the decryption within the original list
             extended_alphabet = alphabet + alphabet
-            print(extended_alphabet)
             position = extended_alphabet.index(letter)
             new_position = position + shift_amount
             new_letter = extended_alphabet[new_position]
@@ -21,11 +22,20 @@ def encrypt(plain_text, shift_amount):
         else:
             new_letter = alphabet[new_position]
             cipher += new_letter
-    print(alphabet)
     print(f"The encoded text is {cipher}")
 
-    # 🐛Bug alert: What happens if you try to encode the word 'civilization'?🐛
+
+def decrypt(cipher_text, shift_amount):
+    d_cipher = ""
+    for letter in cipher_text:
+        position = alphabet.index(letter)
+        new_position = position - shift_amount
+        new_letter = alphabet[new_position]
+        d_cipher += new_letter
+    print(f"The decoded text is {d_cipher}")
 
 
-# TODO-3: Call the encrypt function and pass in the user inputs. You should be able to test the code and encrypt a message.
-encrypt(plain_text=text, shift_amount=shift)
+if direction == 'encode':
+    encrypt(plain_text=text, shift_amount=shift)
+elif direction == 'decode':
+    decrypt(cipher_text=text, shift_amount=shift)
